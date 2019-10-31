@@ -1,0 +1,35 @@
+<div class="header-container">
+  <div class="logo-container">
+    <a (click)="toggleSidebar()" href="#" class="sidebar-toggle">
+      <nb-icon icon="menu-2-outline"></nb-icon>
+    </a>
+    <a class="logo" href="#" (click)="navigateHome()">E-<span>HOSPITAL</span></a>
+  </div>
+  <nb-select [selected]="currentTheme" (selectedChange)="changeTheme($event)" status="primary">
+    <nb-option *ngFor="let theme of themes" [value]="theme.value"> {{ theme.name }}</nb-option>
+  </nb-select>
+</div>
+
+<div class="header-container">
+  <div *ngIf="authService.user$ | async as user">
+    <nb-actions size="small">
+      <nb-action class="control-item" >
+          <nb-icon icon="email-outline"></nb-icon>
+        <nb-badge text="new" status="danger" position="top right"></nb-badge>
+      </nb-action>
+      <nb-action class="control-item">
+        <nb-icon icon="bell-outline"></nb-icon>
+        <nb-badge text="11" status="success" position="top right"></nb-badge>
+      </nb-action>
+    
+      <nb-action class="user-action" *nbIsGranted="['view', 'user']">
+        <nb-user [nbContextMenu]="userMenu"
+                [onlyPicture]="userPictureOnly"
+                [name]="user?.displayName "
+                [picture]="user?.photoURL">
+        </nb-user>
+      </nb-action>
+  
+    </nb-actions>
+  </div>
+</div>

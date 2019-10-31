@@ -1,0 +1,17 @@
+
+    <!-- <div
+        *ngIf="authService.user$ | async as user"
+        routerLink="/layouts/medical"
+        [queryParams]="{ user: user.displayName }"
+        >
+        {{ user.displayName }}
+    </div> -->
+
+     <div
+        *ngIf="authService.user$ | async as user"
+        routerLink="/layouts/medical"
+        [queryParams]="{ Medecin: user.displayName }"
+        >
+        <button nbButton fullWidth shape="round" size="small" status="success">Bienvenue Docteur {{ user.displayName }}</button>  
+    </div>
+

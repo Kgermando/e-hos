@@ -1,0 +1,43 @@
+<div class="row">
+        <div class="col-12">
+            <nb-card>
+                <app-statut-filter [statut]="statut"></app-statut-filter>
+
+                <input nbInput fullWidth status="success" id="search" class="search-input" 
+                    type="text" placeholder=" Faites une recherche par Nom, Age ou encore par Date">
+               <table class="table table-bordered">
+                   <thead>
+                       <tr>
+                           <th>N°</th>
+                           <th>Nom Complet</th>
+                           <th>Age</th>
+                           <th>Sexe</th>
+                           <th>Temperature</th>
+                           <th>Poids</th>
+                           <th>Statut</th>
+                           <th>Date</th>
+                           <th>Details</th>
+                       </tr>
+                   </thead>
+                   <tbody>
+                       <tr *ngFor="let fiche of filteredFiche; let i = index">
+                           <th scope="row">{{ i + 1 }} </th>
+                           <td>{{ fiche.FullName }} </td>
+                           <td>{{ fiche.Age }} </td>
+                           <td>{{ fiche.Sexe }} </td>
+                           <td>{{ fiche.Temperature }}° </td>
+                           <td>{{ fiche.Poids }} </td>
+                           <td>{{ fiche.Statut }}</td>
+                           <td>{{ fiche.Created.toDate()| date: 'dd/MM/yyyy HH:mm:ss' }}</td>
+                           <td (click)=view(fiche.id)>
+                             <button nbButton status="success">Détail</button>
+                           </td>
+                       </tr>
+                   </tbody>
+               </table>
+
+
+            </nb-card>  
+        </div>
+    </div>
+    

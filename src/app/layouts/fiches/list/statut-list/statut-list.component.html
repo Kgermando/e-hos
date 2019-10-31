@@ -1,0 +1,39 @@
+<!-- <div class="row">
+        <div class="col-12">
+            <nb-card size="small"> -->
+              <nb-tabset status="success">
+        
+                <nb-tab tabTitle="Liste de Fiches" 
+                    routerLink="/layouts/list"
+                ></nb-tab>
+        
+        
+                <nb-tab tabTitle="{{ s.name }}"  
+                    *ngFor="let s of statut$ | async"
+                    routerLink="/layouts/list"
+                    [queryParams]="{ statut: s.name }"
+                ></nb-tab>
+    
+            </nb-tabset>
+    <!-- </nb-card>  
+    </div>
+</div> -->
+<!-- 
+    <nav mat-tab-nav-bar>
+        <a mat-tab-link
+        *ngFor="let s of statut$ | async"
+        routerLink="/layouts/list"
+        routerLinkActive #rla="routerLinkActive"
+        [active]="rla.isActive">
+        {{ s.name }}
+        </a>
+    </nav> -->
+
+
+<!-- <a *ngFor="let c of categories$ | async" 
+routerLink="/layouts/category"
+[queryParams]="{ category: c.name }"
+[class.active]="category === c.name"
+class="list-group-item active">
+{{ c.name }}
+</a>  -->

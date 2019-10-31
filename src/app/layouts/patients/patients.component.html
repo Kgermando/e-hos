@@ -1,0 +1,57 @@
+<nb-card>
+    <nb-card-header>
+        <!-- <app-patient-filter [Medecin]='Medecin'></app-patient-filter> -->
+    </nb-card-header>
+    <nb-card-body>
+        <!-- <label class="search-label" for="search">Recherche: </label> -->
+        <input nbInput fullWidth status="success" id="search" class="search-input" 
+             type="text" placeholder=" Faites une recherche par Nom, Age ou encore par Date">
+    <div *ngIf="authService.user$ | async as user">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>N°</th>
+                    <th>NOM COMPLET</th>
+                    <th>AGE</th>
+                    <th>SEXE</th>
+                    <th>TEMPERATURE</th>
+                    <th>POIDS</th>
+                    <th>STATUT</th>
+                    <th>DATE</th>
+                    <th>DETAILS</th>
+                    <th>CONSULTATION</th>
+                    <!-- <th>Suppresion</th> -->
+                </tr>
+            </thead>
+            <tbody *ngFor="let p of Medecin; let i = index">
+                <tr *ngIf="p.Medecin === user.displayName">
+               
+                        <th scope="row">{{ i + 1 }} </th>
+                        <td>{{ p.FullName }} </td> 
+                        <td>{{ p.Age }} ans </td>
+                        <td>{{ p.Sexe }} </td>
+                        <td>{{ p.Temperature }} ° </td>
+                        <td>{{ p.Poids }} kgs </td>
+                        <td>{{ p.Statut }}</td>
+                        <td>{{ p.Created.toDate()| date: 'dd/MM/yyyy HH:mm:ss' }}</td>
+                        <td>
+                            <button nbButton status="success" (click)=view(p.id)>Voir</button>
+                        </td>
+                        <td>
+                            <button nbButton outline status="info" (click)=edit(p.id)>Consultation</button>
+                        </td>
+                        <!-- <td *ngIf="isAdmin==true; else noAdmin">
+                            <button nbButton outline status="danger" (click)="delete(p.id)">Delete</button>
+                        </td>
+                        <ng-template #noAdmin>
+                            <td>
+                                <button nbButton outline status="danger" disabled="true">Delete</button>
+                            </td> 
+                        </ng-template> -->
+                   
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    </nb-card-body>
+  </nb-card>

@@ -1,0 +1,88 @@
+
+  <nb-card class="list-card">
+      <nb-card-header><h4>Fiche de {{ fiche.FullName }} </h4></nb-card-header>
+      <nb-card-body>
+        <nb-list>
+          <nb-list-item >
+           
+              <div class="row">
+                  <div class="col-6">
+                    <p>
+                      Statut: <b style="color: rgb(13, 95, 13)">{{ fiche.Statut }}</b>
+                    </p> 
+                    <p>
+                      Sexe: <b>{{ fiche.Sexe }}</b>
+                    </p>
+                    <p>
+                      Age: <b>{{ fiche.Age }} ans</b>
+                    </p>
+                    <p>
+                      Poids: <b>{{ fiche.Poids }} kgs</b>
+                    </p>
+                    <p>
+                      Medecin en charge: <b>Dr. {{ fiche.Medecin }}</b>
+                    </p>
+                    <p>
+                      Departement: <b>{{ fiche.Departement }}</b>
+                    </p>
+                    <p>
+                      Crée le: <b>{{ fiche.Created}}</b>
+                    </p>
+                    <p>
+                      Mis à jour le: <b>{{ fiche.Updated}}</b>
+                    </p>
+                  </div>
+                  <div class="col-6">
+                      <p>
+                        Temperature: <b>{{ fiche.Temperature }} °</b>
+                      </p>
+                      <p>
+                        Tension Arteriel:  <b>{{ fiche.TensionArteriel }}</b>
+                      </p>
+                      <p>
+                        Nationalité: <b>{{ fiche.Nation }}</b>
+                      </p>
+                      <p>
+                        Numéro de Téléphone:  <b>{{ fiche.Numero }}</b>
+                      </p>
+                      <p>
+                        Premier Soin fait par: <b>{{ fiche.Resceptioniste }}</b>
+                      </p>
+                      <p>
+                        Adresse: <b>{{ fiche.Adress }}</b>     
+                      </p>
+                  </div>
+              </div>             
+          </nb-list-item>
+          <nb-list-item >
+            <p>
+              Consultation: <b>{{ fiche.Consultation }}</b>     
+            </p>
+          </nb-list-item>         
+          <nb-list-item >
+            <p>
+              Resultat des Examens: <b>{{ fiche.ResultatExamen }}</b>    
+            </p>
+          </nb-list-item>
+          <nb-list-item >
+            <p>
+              Conseil du Medecin: <b>{{ fiche.ConseilMedecin }}</b>    
+            </p>
+          </nb-list-item>   
+          <nb-list-item >
+            <p>
+              Prescription: <b>{{ fiche.Prescription }}</b>     
+            </p>
+          </nb-list-item>    
+          <nb-list-item > 
+            <p>
+              Autres: <b>{{ fiche.Autres }}</b>
+            </p>
+
+            
+          </nb-list-item>
+
+        </nb-list>
+        
+      </nb-card-body>
+    </nb-card>

@@ -1,0 +1,87 @@
+<!-- <nb-card *ngFor="let nameFiche of nameFiche$">
+  <nb-card-header>Fiche de {{ nameFiche.FullName }}</nb-card-header>
+</nb-card> -->
+<form [formGroup]="ficheFG">
+        <!-- <div class="row"> -->
+            <!-- <nb-card>
+              <nb-card-body *ngIf="success" class="example-last-child-no-b-margin">
+                <nb-alert status="success" closable>You have been successfully authenticated!</nb-alert>
+              </nb-card-body>
+            </nb-card> -->
+          <!-- <div class="col-lg-6"> -->
+            <!-- <nb-card> -->
+              <!-- <nb-card-header>FICHE DU PATIENT </nb-card-header>
+              <nb-card-body> -->
+                <!-- <input type="text" nbInput formControlName="FullName" fullWidth placeholder="Nom complet ex: John Doe">
+                <div class="full-name-inputs">
+                  <input type="number" formControlName="Age" nbInput fullWidth placeholder="Age">
+                  <nb-select selected="femme" formControlName="Sexe" fullWidth>
+                      <nb-option value="femme">Femme</nb-option>
+                      <nb-option value="homme">Homme</nb-option>
+                  </nb-select>
+                </div>
+                <div class="full-name-inputs">
+                  <input type="number" formControlName="Poids" nbInput fullWidth placeholder="Poids">
+                  <input type="text" nbInput formControlName="Temperature" fullWidth placeholder="Temperature">
+                  <input type="text" nbInput formControlName="TensionArteriel" fullWidth placeholder="Tension Arterielle">
+                </div>
+                <input type="text" nbInput formControlName="Numero" fullWidth placeholder="Numero de Téléphone">
+                <input type="text" formControlName="Nation" nbInput fullWidth placeholder="Nationalité">
+                <textarea rows="5" formControlName="Adress" nbInput fullWidth placeholder="Adresse du domicile"></textarea>
+               </nb-card-body>
+                </nb-card>
+                -->
+                <nb-card>
+                <nb-card-header>Consultation du Patient</nb-card-header>
+                  <nb-card-body>
+                    <textarea rows="5" formControlName="Consultation" nbInput fullWidth placeholder="Consultation avec le médecin (Anamnèse)"></textarea>
+                  </nb-card-body>
+                </nb-card>
+
+                <nb-card>
+                <nb-card-header>Résultats des Examens</nb-card-header>
+                  <nb-card-body>
+                    <textarea rows="5" formControlName="ResultatExamen" nbInput fullWidth placeholder="Résultat des examens"></textarea>
+                  </nb-card-body>
+                </nb-card>
+
+                <nb-card>
+                <nb-card-header>Conseil du Medecin</nb-card-header>
+                  <nb-card-body>
+                    <textarea rows="5" formControlName="ConseilMedecin" nbInput fullWidth placeholder="Conseil avec le malade"></textarea>
+                  </nb-card-body>
+                </nb-card>
+
+                <nb-card>
+                <nb-card-header>Préscription</nb-card-header>
+                  <nb-card-body>
+                    <textarea rows="5" formControlName="Prescription" nbInput fullWidth placeholder="Préscription des medicaments"></textarea>
+                  </nb-card-body>
+                </nb-card>
+
+                <nb-card>
+                <nb-card-header>Autres ou Constats</nb-card-header>
+                  <nb-card-body>
+                    <textarea rows="8" formControlName="Autres" nbInput fullWidth placeholder="Autres préocupations"></textarea>
+                  </nb-card-body>
+                </nb-card>
+              
+                <nb-card>
+                <nb-card-header>STATUT DU PATIENT</nb-card-header>
+                <nb-card-body>
+                  <nb-select selected="" formControlName="Statut" fullWidth >
+                    <nb-option value="{{ statut.name }}" *ngFor="let statut of statuts">{{ statut.name }} </nb-option>
+                  </nb-select>
+                </nb-card-body>
+                <div *ngIf='statutValidate()'>
+                  <p>Ce champs est obligatoire pour Statuer la fiche.</p>
+                </div>
+              </nb-card>
+          <!-- </div> -->
+          <!-- <button nbButton fullWidth status="success" (click)="update()">Enregister</button> -->
+                 <button nbButton fullWidth fullWidth status="success" (click)="update()" (click)="toggleLoadingAnimation()"
+               [nbSpinner]="loading" nbSpinnerStatus="success" nbSpinnerSize="large" nbSpinnerMessage="">
+            ENREGISTER
+        </button>
+        <!-- </div> -->
+</form>

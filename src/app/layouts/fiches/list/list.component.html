@@ -1,0 +1,81 @@
+<nb-card>
+  <nb-card-header>
+      <input nbInput fullWidth status="success" id="search" class="search-input"  (keyup)="applyFilter($event.target.value)"
+      type="text" placeholder=" Faites une recherche par Nom, Age ou encore par Date">
+      <!-- <mat-icon matPrefix>search</mat-icon>
+        <input matInput fullWidth
+        type="text"
+        tabindex="1"
+        (keyup)="applyFilter($event.target.value)"
+        placeholder="Recherche"> -->
+  </nb-card-header>
+  <nb-card-body>
+    
+    <table mat-table [dataSource]="dataSource">
+
+       <!-- Position Column -->
+      <ng-container matColumnDef="position">
+        <th mat-header-cell *matHeaderCellDef> No. </th>
+        <td mat-cell *matCellDef="let element; let i = index;"> {{i+1}} </td>
+      </ng-container>
+      <!-- Nom Complet Column -->
+      <ng-container matColumnDef="FullName">
+        <th mat-header-cell *matHeaderCellDef> NOM COMPLET </th>
+        <td mat-cell *matCellDef="let element"> {{element.FullName}} </td>
+      </ng-container>
+  
+      <!-- AGE Column -->
+      <ng-container matColumnDef="Age">
+        <th mat-header-cell *matHeaderCellDef> AGE </th>
+        <td mat-cell *matCellDef="let element"> {{element.Age}} ans </td>
+      </ng-container>
+
+        <!-- SEXE Column -->
+      <ng-container matColumnDef="Sexe">
+        <th mat-header-cell *matHeaderCellDef> SEXE </th>
+        <td mat-cell *matCellDef="let element"> {{element.Sexe}} </td>
+      </ng-container>
+
+      <!-- Temperature Column -->
+      <ng-container matColumnDef="Temperature">
+        <th mat-header-cell *matHeaderCellDef> TEMPERATURE </th>
+        <td mat-cell *matCellDef="let element"> {{element.Temperature}} ° </td>
+      </ng-container>
+
+      <!--Poids Column -->
+      <ng-container matColumnDef="Poids">
+        <th mat-header-cell *matHeaderCellDef> POIDS</th>
+        <td mat-cell *matCellDef="let element"> {{element.Poids}} Kgs </td>
+      </ng-container>
+
+      <!-- STATUT Column -->
+      <ng-container matColumnDef="Statut">
+        <th mat-header-cell *matHeaderCellDef> STATUT </th>
+        <td mat-cell *matCellDef="let element"> {{element.Statut}} </td>
+      </ng-container>
+        <!-- DATE Column -->
+        <ng-container matColumnDef="Created">
+          <th mat-header-cell *matHeaderCellDef> DATE </th>
+          <td mat-cell *matCellDef="let element"> {{element.Created.toDate()| date: 'dd/MM/yyyy HH:mm:ss'}} </td>
+        </ng-container>
+
+         <!-- DETAILS Column -->
+         <ng-container matColumnDef="detail" >
+            <th mat-header-cell *matHeaderCellDef> DETAILS </th>
+            <td mat-cell *matCellDef="let element"> 
+              <button mat-icon-button color="primary" (click)="view(element.id)">
+                <mat-icon class="mat-18">open_in_new</mat-icon>
+            </button> 
+          </td>
+          </ng-container>
+  
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+          
+    <mat-paginator [pageSizeOptions]="[10, 20]" showFirstLastButtons></mat-paginator>
+
+  </nb-card-body>
+</nb-card>
+          
+

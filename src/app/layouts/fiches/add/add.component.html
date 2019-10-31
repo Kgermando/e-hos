@@ -1,0 +1,85 @@
+<!-- <nb-alert *ngIf="success" status="success" closable>
+  You have been successfully authenticated!
+</nb-alert> -->
+
+<form [formGroup]="ficheFG">
+  <div class="row">
+    <div class="col-lg-6">
+      <nb-card>
+        <nb-card-header>REMPLIRE LA FICHE</nb-card-header>
+        <nb-card-body>
+          <div>
+            <input type="text" nbInput formControlName="FullName" fullWidth placeholder="Nom complet ex: John Doe" required>
+            <p class="caption status-danger" *ngIf="FullNameValidate()">
+                Le NOM COMPLET du patient est requis!
+            </p>
+          </div>
+          <div class="full-name-inputs">
+            <input type="number" formControlName="Age" nbInput fullWidth placeholder="Age">
+            <nb-select selected="femme" formControlName="Sexe" fullWidth>
+                <nb-option value="femme">Femme</nb-option>
+                <nb-option value="homme">Homme</nb-option>
+            </nb-select>
+          </div>
+          <div class="full-name-inputs">
+            <input type="number" formControlName="Poids" nbInput fullWidth placeholder="Poids">
+            <input type="text" nbInput formControlName="Temperature" fullWidth placeholder="Temperature">
+            <input type="text" nbInput formControlName="TensionArteriel" fullWidth placeholder="Tension Arterielle">
+          </div>
+          <input type="text" nbInput formControlName="Numero" fullWidth placeholder="Numero de Téléphone">
+          <input type="text" formControlName="Nation" nbInput fullWidth placeholder="Nationalité">
+          <textarea rows="5" formControlName="Adress" nbInput fullWidth placeholder="Adresse du domicile"></textarea>
+          <!-- <textarea rows="5" formControlName="Consultation" nbInput fullWidth placeholder="Consultation avec le médecin (Anamnèse)"></textarea>
+          <textarea rows="5" formControlName="ResultatExamen" nbInput fullWidth placeholder="Résultat des examens"></textarea>
+          <textarea rows="5" formControlName="ConseilMedecin" nbInput fullWidth placeholder="Conseil avec le malade"></textarea>
+          <textarea rows="5" formControlName="Prescription" nbInput fullWidth placeholder="Préscription des medicaments"></textarea>
+          <textarea rows="5" formControlName="Autres" nbInput fullWidth placeholder="Autres"></textarea> -->
+        </nb-card-body>
+      </nb-card>
+    </div>
+
+    <div class="col-lg-6">
+  
+      <nb-card>
+        <nb-card-header>STATUT DU PATIENT</nb-card-header>
+        <nb-card-body>
+          <nb-select selected="" formControlName="Statut" fullWidth required>
+            <nb-option value="{{ statut.name }}" *ngFor="let statut of statuts">{{ statut.name }} </nb-option>
+          </nb-select>
+          <p class="caption status-danger" *ngIf="statutValidate()">
+              Le STATUT du patient est requis!
+          </p>
+        </nb-card-body>
+      </nb-card>
+
+      <nb-card>
+        <nb-card-header>MEDECIN DISPONIBLE</nb-card-header>
+        <nb-card-body>
+          <nb-select selected="" formControlName="Medecin" fullWidth required>
+            <nb-option value="{{ user.displayName}}" *ngFor="let user of users" >Dr. {{ user.displayName}}</nb-option>
+          </nb-select>
+          <p class="caption status-danger" *ngIf="medecinValidate()">
+              Le MEDECIN qui prend en charge le patient est requis!
+          </p>
+        </nb-card-body>
+      </nb-card>
+
+      <nb-card>
+        <nb-card-header>DEPARTEMENT</nb-card-header>
+        <nb-card-body>
+            <nb-select selected="" formControlName="Departement" fullWidth>
+              <nb-option value="{{ dep.name }}" *ngFor="let dep of departement">{{ dep.name }}</nb-option>
+            </nb-select>
+        </nb-card-body>
+      </nb-card>
+  
+
+      <!-- <button nbButton fullWidth size="large" status="success" (click)="save()">SOUMETRE</button> -->
+       <button nbButton fullWidth status="success" (click)="save()"  (click)="toggleLoadingAnimation()"
+               [nbSpinner]="loading" nbSpinnerStatus="success" nbSpinnerSize="large" nbSpinnerMessage="">
+            SOUMETRE
+        </button>
+    </div>
+    
+  </div>
+</form>

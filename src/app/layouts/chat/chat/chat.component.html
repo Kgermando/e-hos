@@ -1,0 +1,11 @@
+<nb-chat title="E-Hospital Conversational" size="large">
+    <nb-chat-message *ngFor="let chatMessage of chatMessages | async"
+                     [message]="chatMessage.message"
+                     [hidden]="chatMessage.name === loggedUserName"
+                     [sender]="chatMessage.name"
+                     [date]="chatMessage.sendTime  | date :'h:mm a'"
+                     [ngClass]="{'other-message float-right':chatMessage.name !== loggedUserName,'my-message':chatMessage.name === loggedUserName}"
+                     >
+    </nb-chat-message>
+    <nb-chat-form [dropFiles]="true" [(ngModel)]="message" (click)="sendChatMessage();"></nb-chat-form>
+</nb-chat>

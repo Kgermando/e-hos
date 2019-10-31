@@ -1,0 +1,21 @@
+<section class="another-action">
+    <div *ngIf="authService.user$ | async as user">
+        <nb-card>
+            <nb-card-header>
+                <h4>
+                   {{ user.displayName }} merci de vous assurez d'être bien Déconnecté!
+                </h4>
+            </nb-card-header>
+            <nb-card-body class="form-control-group">
+                    <img src="../../../assets/images/camera4.jpg" style="height: 120px; width: 200px; align-content: center;" alt="">
+            </nb-card-body>
+        </nb-card>
+    </div>
+</section>
+
+
+<section class="another-action">
+    <button nbButton fullWidth status="danger" (click)="logOut()" size="large">
+        Cliquez ici pour vous Déconnectez!
+    </button>
+</section>
