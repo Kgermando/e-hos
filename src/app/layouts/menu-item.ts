@@ -4,7 +4,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
   {
     title: 'TABLEAU DE BORD',
     icon: 'home-outline',
-    link: '/layouts/dashboard',
+    link: '/layouts/welcome',
     home: true,
   },
   {

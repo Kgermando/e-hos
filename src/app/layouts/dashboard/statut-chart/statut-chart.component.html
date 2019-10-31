@@ -1,0 +1,16 @@
+<nb-card>
+    <!-- <nb-card-body> -->
+        <h2 style="text-align: center;">STATUT</h2>
+        <ngx-charts-pie-chart *ngIf = "chartdata"
+            [view]="view"
+            [scheme]="colorScheme"
+            [results]="countryData"
+            [legend]="showLegend"
+            [explodeSlices]="explodeSlices"
+            [labels]="showLabels"
+            [doughnut]="doughnut"
+            (select)="onSelect($event)">
+        </ngx-charts-pie-chart>
+    
+    <!-- </nb-card-body> -->
+</nb-card>

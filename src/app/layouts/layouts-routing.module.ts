@@ -9,6 +9,7 @@ import { PatientsComponent } from './patients/patients.component';
 import { StatutComponent } from './fiches/statut/statut.component';
 import { ChatComponent } from './chat/chat/chat.component';
 import { ECommerceComponent } from './e-commerce/e-commerce.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
 
 const routes: Routes = [
   { path: '', component: LayoutsComponent, children: [
@@ -19,6 +20,7 @@ const routes: Routes = [
     { path: 'medical', component: PatientsComponent },
     { path: 'chat', component: ChatComponent},
     { path: 'dashboard', component: ECommerceComponent },
+    { path: 'welcome', component: DashboardComponent },
 
     { path: 'statut', component: StatutComponent },
 

@@ -65,6 +65,11 @@ import { MatToolbarModule,
   MatPaginatorModule,
   MatProgressSpinnerModule } from '@angular/material';
 import { LayoutModule } from '@angular/cdk/layout';
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
+import { SexeChartComponent } from './dashboard/sexe-chart/sexe-chart.component';
+import { StatutChartComponent } from './dashboard/statut-chart/statut-chart.component';
+import { NationChartComponent } from './dashboard/nation-chart/nation-chart.component';
 
 
 @NgModule({
@@ -79,7 +84,11 @@ import { LayoutModule } from '@angular/cdk/layout';
                  StatutFilterComponent,
                  StatutListComponent,
                  ChatComponent,
-                 TimestampPipe],
+                 TimestampPipe,
+                 DashboardComponent,
+                 SexeChartComponent,
+                 StatutChartComponent,
+                 NationChartComponent],
   imports: [
     CommonModule,
     LayoutsRoutingModule,
@@ -88,6 +97,8 @@ import { LayoutModule } from '@angular/cdk/layout';
     ReactiveFormsModule,
     NgbModule,
     ECommerceModule,
+
+    NgxChartsModule,
 
     MatTabsModule,
     ThemeModule,

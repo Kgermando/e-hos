@@ -34,6 +34,8 @@ import { AuthService } from './auth/services/auth.service';
 import { FicheService } from './layouts/services/data/fiche.service';
 import { UrgencesComponent } from './urgences/urgences.component';
 import { NgxEchartsModule } from 'ngx-echarts';
+// Ngx-Charts
+import { NgxChartsModule } from '@swimlane/ngx-charts';
 const formSetting: any = {
   redirectDelay: 0,
   showMessages: {
@@ -53,6 +55,7 @@ const formSetting: any = {
     FormsModule,
     ReactiveFormsModule,
     NgxEchartsModule,
+    NgxChartsModule,
 
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFirestoreModule, // firestore
