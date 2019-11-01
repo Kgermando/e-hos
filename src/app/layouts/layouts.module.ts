@@ -46,7 +46,6 @@ import { StatutListComponent } from './fiches/list/statut-list/statut-list.compo
 import { MatTabsModule } from '@angular/material/tabs';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ChatComponent } from './chat/chat/chat.component';
-import { ECommerceModule } from './e-commerce/e-commerce.module';
 import { TimestampPipe } from './services/pipes/timestamp.pipe';
 import { MatToolbarModule,
   MatButtonModule,
@@ -96,7 +95,6 @@ import { NationChartComponent } from './dashboard/nation-chart/nation-chart.comp
     FormsModule,
     ReactiveFormsModule,
     NgbModule,
-    ECommerceModule,
 
     NgxChartsModule,
 

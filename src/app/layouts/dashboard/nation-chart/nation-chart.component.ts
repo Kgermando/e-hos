@@ -59,7 +59,7 @@ export class NationChartComponent implements OnInit {
     // tslint:disable-next-line: forin
     for (const key in this.ratingsCount) {
         const singleentry = {
-          name: key + ' star',
+          name: key + ' ans',
           value: this.ratingsCount[key]
         };
         this.ratingData.push(singleentry);
