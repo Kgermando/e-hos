@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FicheService } from '../../services/data/fiche.service';
 import { Fiche } from '../../services/models/fiche';
 import { ActivatedRoute } from '@angular/router';
+import { AuthService } from 'src/app/auth/services/auth.service';
 
 
 @Component({
@@ -12,7 +13,9 @@ import { ActivatedRoute } from '@angular/router';
 export class ViewComponent implements OnInit {
 
 
-  constructor(private route: ActivatedRoute, private ficheService: FicheService) { }
+  constructor(private route: ActivatedRoute,
+              private ficheService: FicheService,
+              public authService: AuthService) { }
 
   public fiche: Fiche = {};
 

@@ -89,46 +89,10 @@ export class AuthService {
     }
 
 
-  async emailLogin(email: string, password: string, rememberMe: boolean) {
-    try {
-      if (rememberMe) {
-        const credential = await this.afAuth.auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL)
-          .then(() => {
-            // Indica que el estado persistirá incluso cuando se cierre la ventana del navegador
-            // o se anule la actividad. Se debe salir de la cuenta de forma explícita para desactivar ese estado.
-            // New sign-in will be persisted with Local persistence.
-            return this.afAuth.auth.signInWithEmailAndPassword(email, password);
-          })
-          .catch((error) => {
-            throw error;
-            // return this.handleError(error);
-          })
-          .finally(() => {
-            return this.updateUserData(credential.user);
-          });
-
-      } else {
-        const credential = await this.afAuth.auth.setPersistence(firebase.auth.Auth.Persistence.SESSION)
-          .then(() => {
-            // SESSION Indica que el estado solo persistirá en la sesión o pestaña actual
-            // y se desactivará cuando se cierre la pestaña o ventana en la que el usuario está autenticado.
-            // New sign-in will be persisted with Session persistence.
-            return this.afAuth.auth.signInWithEmailAndPassword(email, password);
-          })
-          .catch((error) => {
-            throw error;
-            // return this.handleError(error);
-          })
-          .finally(() => {
-            return this.updateUserData(credential.user);
-          });
-      }
-
-      // this.notify.update('Welcome back!', 'success');
-    } catch (error) {
-      return await this.handleError(error);
-    }
+  emailLogin(email, password) {
+    return this.afAuth.auth.signInWithEmailAndPassword(email, password);
   }
+
 
   isAuth() {
     // tslint:disable-next-line: no-shadowed-variable

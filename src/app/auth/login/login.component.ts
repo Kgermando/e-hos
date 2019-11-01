@@ -15,6 +15,11 @@ import { AuthService } from '../services/auth.service';
 export class LoginComponent extends NbLoginComponent implements OnInit {
 
   errorMessage: string;
+  // messages: string[] = [];
+  // tslint:disable-next-line: no-inferrable-types
+  redirectDelay: number = 0;
+
+  errors: string[] = [];
 
   constructor(
     public nbAuth: NbAuthService,
@@ -32,16 +37,39 @@ export class LoginComponent extends NbLoginComponent implements OnInit {
   ngOnInit() { }
 
   /* istanbul ignore next */
-  async login(): Promise<any> {
-    // AngularFire2 login here
-    try {
-      await this.authService.emailLogin(this.user.email, this.user.password, this.user.rememberMe);
-      this.router.navigate(['/layouts/dashboard']);
-    } catch (error) {
-      await this.handleError(error);
-      this.errorMessage = 'Failed to login this email with password!';
-      console.log(this.errorMessage);
-    }
+  // async login(): Promise<any> {
+  //   // AngularFire2 login here
+  //   try {
+  //     await this.authService.emailLogin(this.user.email, this.user.password);
+  //     this.router.navigate(['/layouts']);
+  //   } catch (error) {
+  //     await this.handleError(error);
+  //     this.errorMessage = 'Failed to login this email with password!';
+  //     console.log(this.errorMessage);
+  //   }
+  // }
+
+  login() {
+    this.errors = this.messages = [];
+    this.submitted = true;
+
+    this.authService.emailLogin(this.user.email, this.user.password)
+      .then((res: any) => {
+        this.submitted = false;
+        this.messages = [res];
+
+        this.redirectToDashboard();
+      })
+      .catch((err) => {
+        this.submitted = false;
+        this.errors = [err];
+      });
+  }
+
+  redirectToDashboard() {
+    setTimeout(() => {
+      this.router.navigate(['/layouts']);
+    }, this.redirectDelay);
   }
 
       // Sign in with Google provider

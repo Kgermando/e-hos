@@ -1,17 +1,19 @@
 <nb-card>
+    <nb-card-body> 
         <h2 style="text-align: center;">AGE</h2>
-    <ngx-charts-bar-horizontal
-        [view]="view"
-        [scheme]="colorScheme"
-        [results]="ratingData"
-        [xAxis]="true"
-        [yAxis]="true"
-        [legend]="false"
-        [showXAxisLabel]="true"
-        [showYAxisLabel]="true"
-        [xAxisLabel]="xAxisLabel"
-        [yAxisLabel]="yAxisLabel"
-        (select)="onSelect($event)">
-    </ngx-charts-bar-horizontal>
+        <ngx-charts-bar-horizontal
+            [view]="view"
+            [scheme]="colorScheme"
+            [results]="ratingData"
+            [xAxis]="true"
+            [yAxis]="true"
+            [legend]="false"
+            [showXAxisLabel]="true"
+            [showYAxisLabel]="true"
+            [xAxisLabel]="xAxisLabel"
+            [yAxisLabel]="yAxisLabel"
+            (select)="onSelect($event)">
+        </ngx-charts-bar-horizontal>
+    </nb-card-body> 
 </nb-card>
 
