@@ -46,7 +46,7 @@ const formSetting: any = {
 @NgModule({
   declarations: [
     AppComponent,
-    UrgencesComponent
+    UrgencesComponent,
   ],
   imports: [
     BrowserModule,

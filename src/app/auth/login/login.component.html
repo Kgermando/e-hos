@@ -27,7 +27,7 @@
            status="success"
            id="input-email"
            pattern=".+@.+\..+"
-           placeholder="Enter your email address..."
+           placeholder="Entrez votre adres mail..."
            fieldSize="large"
            autofocus
            [status]="email.dirty ? (email.invalid  ? 'danger' : 'success') : ''"
@@ -56,7 +56,7 @@
            status="success"
            type="password"
            id="input-password"
-           placeholder="Password"
+           placeholder="Entrez votre Mot de Passe"
            fieldSize="large"
            [status]="password.dirty ? (password.invalid  ? 'danger' : 'success') : ''"
            [required]="getConfigValue('forms.validation.password.required')"

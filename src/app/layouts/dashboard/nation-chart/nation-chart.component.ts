@@ -8,83 +8,56 @@ import { FicheService } from '../../services/data/fiche.service';
 })
 export class NationChartComponent implements OnInit {
 
-   // tslint:disable-next-line: no-inferrable-types
-   chartdata: boolean = false;
+  // tslint:disable-next-line: no-inferrable-types
+  chartdata: boolean = false;
 
-   ratingsCount = [];
-   ratingData = [];
-   totalCount = 0;
-   actualRating;
+  countryCount = [];
+  countryData = [];
 
-   xAxisLabel = 'Tranche d\'âges';
-   yAxisLabel = 'Categorie d\'âges';
+  // Chart
+  view: any[] = [500, 300];
+  showLegend = true;
 
-   // Chart
-   view: any[] = [500, 300];
-   showLegend = true;
+  colorScheme = {
+    domain: ['#012456', '#43A18E', '#0097FB', '#C7B42C', '#40235D', '#A10A28',
+             '#084241', '#074105', '#BD9C24', '#B85E21', '#E91427', '#F8C89A']
+  };
+  showLabels = true;
+  explodeSlices = false;
+  doughnut = false;
 
-   colorScheme = {
-     domain: ['#24BFA5', '#A10A28', '#FFA001', '#AAAAAA' ]
-   };
-   showLabels = true;
-   explodeSlices = false;
-   doughnut = false;
+  constructor(private ficheService: FicheService) { }
 
-   constructor(private ficheService: FicheService) { }
-
-   ngOnInit() {
-     this.ficheService.getCollection$().subscribe((results) => {
-       this.chartdata = true;
-       this.processData(results);
-     });
-   }
-
-   onSelect(event) {
-     console.log(event);
-   }
-
-   processData(entries) {
-    this.ratingData = [];
-    this.ratingsCount = [];
-    this.totalCount = 0;
-
-    entries.forEach(element => {
-      if (this.ratingsCount[element.Age]) {
-        this.ratingsCount[element.Age] += 1;
-      } else {
-        this.ratingsCount[element.Age] = 1;
-      }
+  ngOnInit() {
+    this.ficheService.getCollection$().subscribe((results) => {
+      this.chartdata = true;
+      this.processData(results);
     });
-
-    // tslint:disable-next-line: forin
-    for (const key in this.ratingsCount) {
-        const singleentry = {
-          name: key + ' ans',
-          value: this.ratingsCount[key]
-        };
-        this.ratingData.push(singleentry);
-      }
-
-    for (const key in this.ratingsCount) {
-      if (key === '80') {
-        this.totalCount += this.ratingsCount[key] * 1;
-      } else if (key === '50') {
-        this.totalCount += this.ratingsCount[key] * 1;
-      } else if (key === '33') {
-        this.totalCount += this.ratingsCount[key] * 1;
-      } else if (key === '20') {
-        this.totalCount += this.ratingsCount[key] * 1;
-      } else if (key === '10') {
-        this.totalCount += this.ratingsCount[key] * 1;
-      } else if (key === '5') {
-        this.totalCount += this.ratingsCount[key] * 1;
-      } else {
-        this.totalCount += this.ratingsCount[key];
- }
-    }
-    this.actualRating = (this.totalCount / entries.length).toFixed(2);
-
   }
 
+  onSelect(event) {
+    console.log(event);
+  }
+
+  processData(entries) {
+    this.countryCount = [];
+    this.countryData = [];
+
+    entries.forEach(element => {
+      if (this.countryCount[element.Nation]) {
+        this.countryCount[element.Nation] += 1;
+      } else {
+        this.countryCount[element.Nation] = 1;
+      }
+    });
+    // tslint:disable-next-line: forin
+    for (const key in this.countryCount) {
+        const singleentry = {
+          name: key,
+          value: this.countryCount[key]
+        };
+        this.countryData.push(singleentry);
+      }
+    }
 
 }

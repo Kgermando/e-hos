@@ -69,6 +69,8 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { SexeChartComponent } from './dashboard/sexe-chart/sexe-chart.component';
 import { StatutChartComponent } from './dashboard/statut-chart/statut-chart.component';
 import { NationChartComponent } from './dashboard/nation-chart/nation-chart.component';
+import { EventsComponent } from './dashboard/events/events.component';
+import { DepartementComponent } from './dashboard/departement/departement.component';
 
 
 @NgModule({
@@ -87,7 +89,9 @@ import { NationChartComponent } from './dashboard/nation-chart/nation-chart.comp
                  DashboardComponent,
                  SexeChartComponent,
                  StatutChartComponent,
-                 NationChartComponent],
+                 NationChartComponent,
+                 EventsComponent,
+                 DepartementComponent],
   imports: [
     CommonModule,
     LayoutsRoutingModule,

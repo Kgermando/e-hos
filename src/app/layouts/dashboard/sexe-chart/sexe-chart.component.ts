@@ -19,7 +19,7 @@ export class SexeChartComponent implements OnInit {
   showLegend = true;
 
   colorScheme = {
-    domain: ['#012456', '#E91427', '#C7B42C', '#A10A28']
+    domain: ['#E91427', '#012456']
   };
   showLabels = true;
   explodeSlices = false;
