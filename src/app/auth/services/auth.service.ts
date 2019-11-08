@@ -18,6 +18,9 @@ export class AuthService {
   user$: Observable<User>;
   userData: any; // Save logged in user data
 
+  // start with no user
+  authState: any = null;
+
   public get isAuthenticated$(): Observable<boolean> {
     return this.afAuth.authState.pipe(
       switchMap(user => {
@@ -37,9 +40,10 @@ export class AuthService {
     private afs: AngularFirestore,
     private router: Router
     ) {
+      this.afAuth.authState.subscribe(data => (this.authState = data));
 
     // Get the auth state, then fetch the Firestore user document or return null
-    this.user$ = this.afAuth.authState.pipe(
+      this.user$ = this.afAuth.authState.pipe(
       switchMap(user => {
         if (user) {
           // logged in, get custom user from Firestore

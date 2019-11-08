@@ -1,18 +1,14 @@
-export interface Fiche {
-    id?: string;
-    FullName?: string;
-    Age?: number;
-    Sexe?: string;
-    Poids?: number;
-    Temperature?: string;
-    TensionArteriel?: string;
-    Nation?: string;
-    Adress?: string;
+import { Fiche } from './fiche';
+
+
+export interface Exist {
+    id: string;
+    identite: Fiche;
     Numero?: string;
     Statut?: string;
     Medecin?: any; // Medecin devient user
     Departement?: string;
-    Receptioniste?: string;
+    Resceptioniste?: string;
     Consultation?: string;
     ResultatExamen?: string;
     ConseilMedecin?: string;
@@ -21,4 +17,3 @@ export interface Fiche {
     Created?: Date;
     Updated?: Date;
 }
-

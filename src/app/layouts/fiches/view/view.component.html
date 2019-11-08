@@ -1,14 +1,21 @@
 
   <nb-card class="list-card">
       <nb-card-header>
-        <h4>Fiche de {{ fiche.FullName }} </h4>
-        <button nbButton (click)="downloadpdf()">
-          <nb-icon icon="printer-outline"></nb-icon>
-        </button>        
+          <div class="row">
+            <div class="col-6">
+              <h4>Fiche de {{ fiche.FullName }} </h4>
+            </div>
+            <div class="col-6" class="print">
+              <button nbButton (click)="downloadPDF()">
+                <nb-icon icon="printer-outline"></nb-icon>
+              </button> 
+            </div>
+          </div>            
+               
       </nb-card-header>
       <nb-card-body>
         <nb-list>
-          <nb-list-item >
+          <nb-list-item > 
            
               <div class="row">
                   <div class="col-6">
@@ -50,9 +57,9 @@
                       <p>
                         Numéro de Téléphone:  <b>{{ fiche.Numero }}</b>
                       </p>
-                      <!-- <p *ngIf="authService.user$ | async as user">
-                        Premier soin fait par: <b>{{ user.displayName }}</b>
-                      </p> -->
+                      <p>
+                        Premier soin fait par: <b>{{ fiche.Receptioniste }}</b>
+                      </p>
                       <p>
                         Adresse: <b>{{ fiche.Adress }}</b>     
                       </p>

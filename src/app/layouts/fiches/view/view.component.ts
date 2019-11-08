@@ -3,9 +3,7 @@ import { FicheService } from '../../services/data/fiche.service';
 import { Fiche } from '../../services/models/fiche';
 import { ActivatedRoute } from '@angular/router';
 import { AuthService } from 'src/app/auth/services/auth.service';
-// import * as jsPDF from 'jspdf';
-import html2canvas from 'html2canvas';
-import * as jspdf from 'jspdf';
+import * as jsPDF from 'jspdf';
 
 
 @Component({
@@ -15,13 +13,29 @@ import * as jspdf from 'jspdf';
 })
 export class ViewComponent implements OnInit {
 
-  @ViewChild('pdfcontent', {static: false}) pdfcontent: ElementRef;
-
   constructor(private route: ActivatedRoute,
+              private content: ElementRef,
               private ficheService: FicheService,
               public authService: AuthService) {}
 
   fiche: Fiche = {};
+
+  downloadPDF() {
+    console.log('Download here');
+    const report = new jsPDF();
+
+    const specialElementHeaders = {
+      '#editor'(element , renderer) {
+        return true;
+      }
+    };
+    const content = this.content.nativeElement;
+    report.fromHTML(content.innerHTML, 15, 15, {
+      width: 150,
+      elementHeaders: specialElementHeaders
+    });
+    report.save('Fiche.pdf');
+  }
 
   ngOnInit() {
     const id: string = this.route.snapshot.params.id;
@@ -31,34 +45,6 @@ export class ViewComponent implements OnInit {
   getDetails(id: string): void {
     this.ficheService.getOneFiche(id).subscribe(fi => {
       this.fiche = fi;
-    });
-  }
-
- public downloadpdf() {
-    // Download html to PDF
-    const doc = new jspdf();
-    const content = this.pdfcontent.nativeElement;
-    html2canvas(content).then(canvas => {
-      const imgData = canvas.toDataURL('image/png');
-      // Few necessary setting options
-      const imgWidth = 250;
-      const pageHeight = 320;
-      const imgHeight = (canvas.height * imgWidth) / canvas.width;
-      // tslint:disable-next-line: no-shadowed-variable
-      const doc = new jspdf('p', 'mm');
-      let heightLeft = imgHeight;
-      let position = 0;
-
-      doc.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
-      heightLeft -= pageHeight;
-      while (heightLeft >= 0) {
-        position = heightLeft - imgHeight;
-        doc.addPage();
-        doc.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
-        heightLeft -= pageHeight;
-      }
-      // Generated PDF
-      doc.save('fiche' + '.pdf');
     });
   }
 

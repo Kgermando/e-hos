@@ -56,4 +56,8 @@ export class ListComponent implements OnInit {
     this.router.navigate(['/layouts/edit', id]);
   }
 
+  print() {
+    window.print();
+  }
+
 }

@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
-import { AngularFirestore } from '@angular/fire/firestore';
 import { Fiche } from '../../services/models/fiche';
 import { FicheService } from '../../services/data/fiche.service';
 import { StatutService } from '../../services/data/statut.service';
@@ -17,27 +16,26 @@ export class EditComponent implements OnInit {
 
   ficheFG: FormGroup;
   fiche: Fiche = {
-    id: '',
-    FullName: '',
-    Age: 0,
-    Sexe: '',
-    Poids: 0,
-    Temperature: '',
-    TensionArteriel: '',
-    Nation: '',
-    Adress: '',
-    Numero: '',
+    // id: '',
+    // FullName: '',
+    // Age: 0,
+    // Sexe: '',
+    // Poids: 0,
+    // Temperature: '',
+    // TensionArteriel: '',
+    // Nation: '',
+    // Adress: '',
+    // Numero: '',
     Statut: '',
-    Medecin: '',
-    Departement: '',
-    Resceptioniste: '',
+    // Medecin: '',
+    // Departement: '',
     Consultation: '',
     ResultatExamen: '',
     ConseilMedecin: '',
     Autres: '',
     Prescription: '',
     Updated: new Date(),
-    Created: new Date()
+    Created: null
   };
 
   updateFiche;
@@ -57,25 +55,23 @@ export class EditComponent implements OnInit {
   constructor(private formBuilder: FormBuilder,
               private router: Router,
               private route: ActivatedRoute,
-              private db: AngularFirestore,
               private statutServices: StatutService,
               private ficheService: FicheService,
               private toastrService: NbToastrService) {
     this.ficheFG = this.formBuilder.group({
       id: [''],
-      FullName: ['', Validators.required],
-      Age: [''],
-      Sexe: [''],
-      Poids: [''],
-      Temperature: [''],
-      TensionArteriel: [''],
-      Nation: [''],
-      Adress: [''],
-      Numero: [''],
+      // FullName: ['', Validators.required],
+      // Age: [''],
+      // Sexe: [''],
+      // Poids: [''],
+      // Temperature: [''],
+      // TensionArteriel: [''],
+      // Nation: [''],
+      // Adress: [''],
+      // Numero: [''],
       Statut: ['', Validators.required],
-      Medecin: [''],
-      Departement: [''],
-      Resceptioniste: [''],
+      // Medecin: [''],
+      // Departement: [''],
       Consultation: [''],
       ResultatExamen: [''],
       ConseilMedecin: [''],
@@ -84,6 +80,7 @@ export class EditComponent implements OnInit {
     });
   }
 
+  // Toast for confirmation
   config: ToasterConfig;
 
   index = 1;
@@ -111,19 +108,18 @@ export class EditComponent implements OnInit {
   }
 
   setFicheData(value) {
-    this.updateFiche.FullName = value.FullName;
-    this.updateFiche.Age = value.Age;
-    this.updateFiche.Sexe = value.Sexe;
-    this.updateFiche.Poids = value.Poids;
-    this.updateFiche.Temperature = value.Temperature;
-    this.updateFiche.TensionArteriel = value.TensionArteriel;
-    this.updateFiche.Nation = value.Nation;
-    this.updateFiche.Adress = value.Adress;
-    this.updateFiche.Numero = value.Numero;
+    // this.updateFiche.FullName = value.FullName;
+    // this.updateFiche.Age = value.Age;
+    // this.updateFiche.Sexe = value.Sexe;
+    // this.updateFiche.Poids = value.Poids;
+    // this.updateFiche.Temperature = value.Temperature;
+    // this.updateFiche.TensionArteriel = value.TensionArteriel;
+    // this.updateFiche.Nation = value.Nation;
+    // this.updateFiche.Adress = value.Adress;
+    // this.updateFiche.Numero = value.Numero;
     this.updateFiche.Statut = value.Statut;
-    this.updateFiche.Medecin = value.Medecin;
-    this.updateFiche.Departement = value.Departement;
-    this.updateFiche.Resceptioniste = value.Resceptioniste;
+    // this.updateFiche.Medecin = value.Medecin;
+    // this.updateFiche.Departement = value.Departement;
     this.updateFiche.Consultation = value.Consultation;
     this.updateFiche.ResultatExamen = value.ResultatExamen;
     this.updateFiche.ConseilMedecin = value.ConseilMedecin;
@@ -137,19 +133,18 @@ export class EditComponent implements OnInit {
         this.updateFiche = fiches[0];
 
         this.ficheFG.patchValue({
-          FullName: this.updateFiche.FullName,
-          Age: this.updateFiche.Age,
-          Sexe: this.updateFiche.Sexe,
-          Poids: this.updateFiche.Poids,
-          Temperature: this.updateFiche.Temperature,
-          TensionArteriel: this.updateFiche.FullName,
-          Nation: this.updateFiche.Nation,
-          Adress: this.updateFiche.Adress,
-          Numero: this.updateFiche.Numero,
+          // FullName: this.updateFiche.FullName,
+          // Age: this.updateFiche.Age,
+          // Sexe: this.updateFiche.Sexe,
+          // Poids: this.updateFiche.Poids,
+          // Temperature: this.updateFiche.Temperature,
+          // TensionArteriel: this.updateFiche.FullName,
+          // Nation: this.updateFiche.Nation,
+          // Adress: this.updateFiche.Adress,
+          // Numero: this.updateFiche.Numero,
           Statut: this.updateFiche.Statut,
-          Medecin: this.updateFiche.Medecin,
-          Departement: this.updateFiche.Departement,
-          Resceptioniste: this.updateFiche.Resceptioniste,
+          // Medecin: this.updateFiche.Medecin,
+          // Departement: this.updateFiche.Departement,
           Consultation: this.updateFiche.Consultation,
           ResultatExamen: this.updateFiche.ResultatExamen,
           ConseilMedecin: this.updateFiche.ConseilMedecin,

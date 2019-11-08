@@ -71,6 +71,8 @@ import { StatutChartComponent } from './dashboard/statut-chart/statut-chart.comp
 import { NationChartComponent } from './dashboard/nation-chart/nation-chart.component';
 import { EventsComponent } from './dashboard/events/events.component';
 import { DepartementComponent } from './dashboard/departement/departement.component';
+import { ExistComponent } from './fiches/exist/exist.component';
+import { NgxNotificationComponent } from 'ngx-notification';
 
 
 @NgModule({
@@ -91,7 +93,9 @@ import { DepartementComponent } from './dashboard/departement/departement.compon
                  StatutChartComponent,
                  NationChartComponent,
                  EventsComponent,
-                 DepartementComponent],
+                 DepartementComponent,
+                 NgxNotificationComponent,
+                 ExistComponent],
   imports: [
     CommonModule,
     LayoutsRoutingModule,

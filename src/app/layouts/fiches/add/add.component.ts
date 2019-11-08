@@ -14,6 +14,8 @@ import {
   NbGlobalPosition,
   NbToastrService,
 } from '@nebular/theme';
+import { AuthService } from 'src/app/auth/services/auth.service';
+import { NgxNotificationService } from 'ngx-notification';
 
 @Component({
   selector: 'app-add',
@@ -51,6 +53,8 @@ export class AddComponent implements OnInit {
     'Salomon', 'Samoa', 'Tonga', 'Tuvalu', 'Vanuatu'
   ];
 
+  // user$: BehaviorSubject<User>;
+
   ficheFG: FormGroup;
   fiche: Fiche = {
     id: '',
@@ -66,14 +70,14 @@ export class AddComponent implements OnInit {
     Statut: '',
     Medecin: '',
     Departement: '',
-    Resceptioniste: '',
+    Receptioniste: '',
     Consultation: '',
     ResultatExamen: '',
     ConseilMedecin: '',
     Autres: '',
     Prescription: '',
     Updated: null,
-    Created: null
+    Created: null,
   };
 
   // tslint:disable-next-line: no-inferrable-types
@@ -93,31 +97,32 @@ export class AddComponent implements OnInit {
               private ficheService: FicheService,
               private statutServices: StatutService,
               private usersService: UsersService,
+              private authService: AuthService,
               private departementService: DepartementService,
+              private ngxNotificationService: NgxNotificationService,
               private toastrService: NbToastrService) {
 
-    this.ficheFG = this.formBuilder.group({
-      id: [''],
-      FullName: ['', Validators.required],
-      Age: [''],
-      Sexe: [''],
-      Poids: [''],
-      Temperature: [''],
-      TensionArteriel: [''],
-      Nation: [''],
-      Adress: [''],
-      Numero: [''],
-      Statut: ['', Validators.required],
-      Medecin: [''],
-      Departement: [''],
-      Resceptioniste: [''],
-      Consultation: [''],
-      ResultatExamen: [''],
-      ConseilMedecin: [''],
-      Prescription: [''],
-      Autres: [''],
-    });
-  }
+                this.ficheFG = this.formBuilder.group({
+                      id: [''],
+                      FullName: ['', Validators.required],
+                      Age: [''],
+                      Sexe: [''],
+                      Poids: [''],
+                      Temperature: [''],
+                      TensionArteriel: [''],
+                      Nation: [''],
+                      Adress: [''],
+                      Numero: [''],
+                      Statut: ['', Validators.required],
+                      Medecin: [''],
+                      Departement: [''],
+                      Consultation: [''],
+                      ResultatExamen: [''],
+                      ConseilMedecin: [''],
+                      Prescription: [''],
+                      Autres: [''],
+                    });
+                  }
 
   config: ToasterConfig;
 
@@ -151,6 +156,7 @@ export class AddComponent implements OnInit {
       this.loading = true;
       this.fiche = this.ficheFG.value;
       this.fiche.id = this.db.createId();
+      this.fiche.Receptioniste = this.authService.authState.displayName || this.authService.authState.email,
       this.fiche.Created = new Date();
       this.fiche.Updated = new Date();
       this.ficheService.add(this.fiche).then(res => {
@@ -162,6 +168,7 @@ export class AddComponent implements OnInit {
         console.log(res);
         this.success = true;
         this.makeToast();
+        this.sendNotification();
         console.log('Fiche enregistrée !');
       }));
     } else {
@@ -199,11 +206,11 @@ export class AddComponent implements OnInit {
   toggleLoadingAnimation() {
       this.loading = true;
       setTimeout(() => this.loading = false, 3000);
-    }
+  }
 
   makeToast() {
       this.showToast(this.status, this.title, this.content);
-    }
+  }
 
   private showToast(type: NbComponentStatus, title: string, body: string) {
       const config = {
@@ -221,6 +228,10 @@ export class AddComponent implements OnInit {
         body,
         `${titleContent}`,
         config);
+    }
+
+    sendNotification() {
+      this.ngxNotificationService.sendMessage('Vous avez un nouveau patient!', 'success', 'bottom-right');
     }
 
 }

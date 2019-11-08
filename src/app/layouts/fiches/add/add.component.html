@@ -1,6 +1,3 @@
-<!-- <nb-alert *ngIf="success" status="success" closable>
-  You have been successfully authenticated!
-</nb-alert> -->
 
 <form [formGroup]="ficheFG">
   <div class="row">
@@ -31,8 +28,6 @@
           <nb-select selected="" formControlName="Nation" fullWidth placeholder="Nationalité">
             <nb-option *ngFor="let nation of nationalite" value="{{ nation }}">{{ nation }}</nb-option>
           </nb-select>
-
-          <!-- <input type="text" formControlName="Nation" nbInput fullWidth placeholder="Nationalité"> -->
           <textarea rows="5" formControlName="Adress" nbInput fullWidth placeholder="Adresse du domicile: Province, Quartier, Avenue et Numero"></textarea>
           <!-- <textarea rows="5" formControlName="Consultation" nbInput fullWidth placeholder="Consultation avec le médecin (Anamnèse)"></textarea>
           <textarea rows="5" formControlName="ResultatExamen" nbInput fullWidth placeholder="Résultat des examens"></textarea>
@@ -88,3 +83,4 @@
     
   </div>
 </form>
+<lib-ngx-notification></lib-ngx-notification>
