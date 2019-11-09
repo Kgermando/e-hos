@@ -46,7 +46,6 @@ import { StatutListComponent } from './fiches/list/statut-list/statut-list.compo
 import { MatTabsModule } from '@angular/material/tabs';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ChatComponent } from './chat/chat/chat.component';
-import { TimestampPipe } from './services/pipes/timestamp.pipe';
 import { MatToolbarModule,
   MatButtonModule,
   MatSidenavModule,
@@ -72,7 +71,9 @@ import { NationChartComponent } from './dashboard/nation-chart/nation-chart.comp
 import { EventsComponent } from './dashboard/events/events.component';
 import { DepartementComponent } from './dashboard/departement/departement.component';
 import { ExistComponent } from './fiches/exist/exist.component';
-import { NgxNotificationComponent } from 'ngx-notification';
+import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { DateFormatPipe } from './services/pipe/date-format.pipe';
 
 
 @NgModule({
@@ -87,23 +88,23 @@ import { NgxNotificationComponent } from 'ngx-notification';
                  StatutFilterComponent,
                  StatutListComponent,
                  ChatComponent,
-                 TimestampPipe,
                  DashboardComponent,
                  SexeChartComponent,
                  StatutChartComponent,
                  NationChartComponent,
                  EventsComponent,
                  DepartementComponent,
-                 NgxNotificationComponent,
-                 ExistComponent],
+                 ExistComponent,
+                DateFormatPipe],
   imports: [
     CommonModule,
+    BrowserModule,
+    BrowserAnimationsModule,
     LayoutsRoutingModule,
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
     NgbModule,
-
     NgxChartsModule,
 
     MatTabsModule,

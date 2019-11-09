@@ -36,6 +36,8 @@ import { UrgencesComponent } from './urgences/urgences.component';
 import { NgxEchartsModule } from 'ngx-echarts';
 // Ngx-Charts
 import { NgxChartsModule } from '@swimlane/ngx-charts';
+
+
 const formSetting: any = {
   redirectDelay: 0,
   showMessages: {
@@ -50,6 +52,7 @@ const formSetting: any = {
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
@@ -63,7 +66,7 @@ const formSetting: any = {
     AngularFireStorageModule, // storage
     // Enable Offline Data in AngularFirestore
     AngularFirestoreModule.enablePersistence(), // imports firebase/firestore, only needed for database features
-    BrowserAnimationsModule,
+
     // NbThemeModule.forRoot({ name: 'default' }),
     NbLayoutModule,
     NbEvaIconsModule,

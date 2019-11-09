@@ -4,6 +4,7 @@ import { Fiche } from '../../services/models/fiche';
 import { ActivatedRoute } from '@angular/router';
 import { AuthService } from 'src/app/auth/services/auth.service';
 import * as jsPDF from 'jspdf';
+import { DateFormatPipe } from '../../services/pipe/date-format.pipe';
 
 
 @Component({
