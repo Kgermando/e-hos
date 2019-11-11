@@ -1,57 +1,55 @@
+
 <nb-card>
-    <nb-card-header>
-        <!-- <app-patient-filter [Medecin]='Medecin'></app-patient-filter> -->
-    </nb-card-header>
     <nb-card-body>
-        <!-- <label class="search-label" for="search">Recherche: </label> -->
-        <input nbInput fullWidth status="success" id="search" class="search-input" 
-             type="text" placeholder=" Faites une recherche par Nom, Age ou encore par Date">
-    <div *ngIf="authService.user$ | async as user">
-        <table class="table table-bordered">
+        <form>
+            <div class="form-group form-inline">
+                <input class="form-control ml-2" type="text" placeholder="Recherche un patient" nbInput fullWidth [formControl]="filter"/>
+            </div>
+        </form>
+        <div *ngIf="authService.user$ | async as user">    
+        <table class="table table-striped">
             <thead>
-                <tr>
-                    <th>N°</th>
-                    <th>NOM COMPLET</th>
-                    <th>AGE</th>
-                    <th>SEXE</th>
-                    <th>TEMPERATURE</th>
-                    <th>POIDS</th>
-                    <th>STATUT</th>
-                    <th>DATE</th>
-                    <th>DETAILS</th>
-                    <th>CONSULTATION</th>
-                    <!-- <th>Suppresion</th> -->
-                </tr>
+            <tr>
+                <th scope="col">N°</th>
+                <th scope="col">NOM COMPLET</th>
+                <th scope="col">AGE</th>
+                <th scope="col">SEXE</th>
+                <th scope="col">TEMPERATURE</th>
+                <th scope="col">POIDS</th>
+                <th scope="col">STATUT</th>
+                <th scope="col">DATE</th>
+                <th scope="col">DETAILS</th>
+                <th scope="col">CONSULTATION</th>
+            </tr>
             </thead>
-            <tbody *ngFor="let p of Medecin; let i = index">
-                <tr *ngIf="p.Medecin === user.displayName">
-               
-                        <th scope="row">{{ i + 1 }} </th>
-                        <td>{{ p.FullName }} </td> 
-                        <td>{{ p.Age }} ans </td>
-                        <td>{{ p.Sexe }} </td>
-                        <td>{{ p.Temperature }} ° </td>
-                        <td>{{ p.Poids }} kgs </td>
-                        <td>{{ p.Statut }}</td>
-                        <td>{{ p.Created.toDate()| date: 'dd/MM/yyyy HH:mm:ss' }}</td>
-                        <td>
-                            <button nbButton status="success" (click)=view(p.id)>Voir</button>
-                        </td>
-                        <td>
-                            <button nbButton outline status="info" (click)=edit(p.id)>Consultation</button>
-                        </td>
-                        <!-- <td *ngIf="isAdmin==true; else noAdmin">
-                            <button nbButton outline status="danger" (click)="delete(p.id)">Delete</button>
-                        </td>
-                        <ng-template #noAdmin>
-                            <td>
-                                <button nbButton outline status="danger" disabled="true">Delete</button>
-                            </td> 
-                        </ng-template> -->
-                   
+            <tbody *ngFor="let fiche of fiches | paginate: { itemsPerPage: 10, currentPage: p }; index as i">
+                <tr *ngIf="fiche.Medecin === user.displayName">
+                    <th scope="row">{{ i + 1 }}</th>
+                    <td>
+                        <ngb-highlight [result]="fiche.FullName" [term]="filter.value"></ngb-highlight>
+                    </td>
+                    <td><ngb-highlight [result]="fiche.Age" [term]="filter.value"></ngb-highlight> ans</td>
+                    <td><ngb-highlight [result]="fiche.Sexe" [term]="filter.value"></ngb-highlight></td>
+                    <td><ngb-highlight [result]="fiche.Temperature" [term]="filter.value"></ngb-highlight> °</td>
+                    <td><ngb-highlight [result]="fiche.Poids" [term]="filter.value"></ngb-highlight> Kgs</td>
+                    <td><ngb-highlight [result]="fiche.Statut" [term]="filter.value"></ngb-highlight></td>
+                    <td><ngb-highlight [result]="fiche.Created.toDate()| date: 'dd/MM/yyyy HH:mm:ss'"></ngb-highlight></td>
+                    <td>
+                    <button mat-icon-button color="primary" (click)="view(fiche.id)">
+                        <mat-icon class="mat-18">open_in_new</mat-icon>
+                    </button> 
+                    </td>
+                    <td>
+                        <button nbButton outline status="info" (click)="edit(fiche.id)">Consultation</button>
+                    </td>
                 </tr>
+                
             </tbody>
         </table>
-    </div>
+    
+        <pagination-controls (pageChange)="p = $event"></pagination-controls>
+        </div>  
     </nb-card-body>
-  </nb-card>
+</nb-card>
+      
+      

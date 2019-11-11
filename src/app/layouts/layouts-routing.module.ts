@@ -6,7 +6,6 @@ import { EditComponent } from './fiches/edit/edit.component';
 import { ViewComponent } from './fiches/view/view.component';
 import { ListComponent } from './fiches/list/list.component';
 import { PatientsComponent } from './patients/patients.component';
-import { StatutComponent } from './fiches/statut/statut.component';
 import { ChatComponent } from './chat/chat/chat.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 
@@ -19,7 +18,6 @@ const routes: Routes = [
     { path: 'medical', component: PatientsComponent },
     { path: 'chat', component: ChatComponent},
     { path: 'welcome', component: DashboardComponent },
-    { path: 'statut', component: StatutComponent },
 
 
     { path: '', redirectTo: 'welcome', pathMatch: 'full'}

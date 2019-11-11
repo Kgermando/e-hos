@@ -1,90 +1,65 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FicheService } from '../../services/data/fiche.service';
+import { NbThemeService } from '@nebular/theme';
 
 @Component({
   selector: 'app-events',
   templateUrl: './events.component.html',
   styleUrls: ['./events.component.scss']
 })
-export class EventsComponent implements OnInit {
+export class EventsComponent implements OnInit, OnDestroy {
 
   // tslint:disable-next-line: no-inferrable-types
-  chartdata: boolean = false;
+  // chartdata: boolean = false;
+  results = [];
+  resultsData = [];
 
-  ratingsCount = [];
-  ratingData = [];
-  totalCount = 0;
-  actualRating;
-
+  showLegend = true;
+  showXAxis = true;
+  showYAxis = true;
   xAxisLabel = 'Tranche d\'âges';
   yAxisLabel = 'Categorie d\'âges';
+  colorScheme: any;
+  themeSubscription: any;
 
-  // Chart
-  view: any[] = [500, 300];
-  showLegend = true;
-
-  colorScheme = {
-    domain: ['#FFA001', '#24BFA5', '#A10A28', '#AAAAAA' ]
-  };
-  showLabels = true;
-  explodeSlices = false;
-  doughnut = false;
-
-  constructor(private ficheService: FicheService) { }
+  constructor(private theme: NbThemeService, private ficheService: FicheService) {
+    this.themeSubscription = this.theme.getJsTheme().subscribe(config => {
+      const colors: any = config.variables;
+      this.colorScheme = {
+        domain: [colors.primaryLight, colors.infoLight, colors.successLight, colors.warningLight, colors.dangerLight],
+      };
+    });
+  }
 
   ngOnInit() {
     this.ficheService.getCollection$().subscribe((results) => {
-      this.chartdata = true;
+      // this.chartdata = true;
       this.processData(results);
     });
   }
 
-  onSelect(event) {
-    console.log(event);
-  }
-
   processData(entries) {
-   this.ratingData = [];
-   this.ratingsCount = [];
-   this.totalCount = 0;
+    this.results = [];
+    this.resultsData = [];
 
-   entries.forEach(element => {
-     if (this.ratingsCount[element.Age]) {
-       this.ratingsCount[element.Age] += 1;
-     } else {
-       this.ratingsCount[element.Age] = 1;
-     }
-   });
+    entries.forEach(element => {
+      if (this.results[element.Age]) {
+        this.results[element.Age] += 1;
+      } else {
+        this.results[element.Age] = 1;
+      }
+    });
+    // tslint:disable-next-line: forin
+    for (const key in this.results) {
+        const singleentry = {
+          name: key,
+          value: this.results[key]
+        };
+        this.resultsData.push(singleentry);
+      }
+    }
 
-   // tslint:disable-next-line: forin
-   for (const key in this.ratingsCount) {
-       const singleentry = {
-         name: key + ' ans',
-         value: this.ratingsCount[key]
-       };
-       this.ratingData.push(singleentry);
-     }
-
-   for (const key in this.ratingsCount) {
-     if (key === '80') {
-       this.totalCount += this.ratingsCount[key] * 1;
-     } else if (key === '50') {
-       this.totalCount += this.ratingsCount[key] * 1;
-     } else if (key === '33') {
-       this.totalCount += this.ratingsCount[key] * 1;
-     } else if (key === '20') {
-       this.totalCount += this.ratingsCount[key] * 1;
-     } else if (key === '10') {
-       this.totalCount += this.ratingsCount[key] * 1;
-     } else if (key === '5') {
-       this.totalCount += this.ratingsCount[key] * 1;
-     } else {
-       this.totalCount += this.ratingsCount[key];
-}
-   }
-   this.actualRating = (this.totalCount / entries.length).toFixed(2);
-
- }
-
-
+  ngOnDestroy(): void {
+    this.themeSubscription.unsubscribe();
+  }
 }

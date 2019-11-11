@@ -15,7 +15,6 @@ import {
   NbToastrService,
 } from '@nebular/theme';
 import { AuthService } from 'src/app/auth/services/auth.service';
-import { NgxNotificationService } from 'ngx-notification';
 
 @Component({
   selector: 'app-add',
@@ -99,7 +98,6 @@ export class AddComponent implements OnInit {
               private usersService: UsersService,
               private authService: AuthService,
               private departementService: DepartementService,
-              private ngxNotificationService: NgxNotificationService,
               private toastrService: NbToastrService) {
 
                 this.ficheFG = this.formBuilder.group({
@@ -168,7 +166,6 @@ export class AddComponent implements OnInit {
         console.log(res);
         this.success = true;
         this.makeToast();
-        this.sendNotification();
         console.log('Fiche enregistrée !');
       }));
     } else {
@@ -228,10 +225,6 @@ export class AddComponent implements OnInit {
         body,
         `${titleContent}`,
         config);
-    }
-
-    sendNotification() {
-      this.ngxNotificationService.sendMessage('Vous avez un nouveau patient!', 'success', 'bottom-right');
     }
 
 }

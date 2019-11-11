@@ -37,42 +37,30 @@ import { AddComponent } from './fiches/add/add.component';
 import { EditComponent } from './fiches/edit/edit.component';
 import { ViewComponent } from './fiches/view/view.component';
 import { ListComponent } from './fiches/list/list.component';
-import { Ng2SmartTableModule } from 'ng2-smart-table';
-import { StatutComponent } from './fiches/statut/statut.component';
-import { PatientFilterComponent } from './patients/patient-filter/patient-filter.component';
 import { PatientsComponent } from './patients/patients.component';
-import { StatutFilterComponent } from './fiches/statut/statut-filter/statut-filter.component';
-import { StatutListComponent } from './fiches/list/statut-list/statut-list.component';
-import { MatTabsModule } from '@angular/material/tabs';
+// import { MatTabsModule } from '@angular/material/tabs';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ChatComponent } from './chat/chat/chat.component';
-import { MatToolbarModule,
+import {
   MatButtonModule,
-  MatSidenavModule,
   MatIconModule,
-  MatListModule,
-  MatGridListModule,
-  MatCardModule,
-  MatMenuModule,
-  MatFormFieldModule,
-  MatCheckboxModule,
-  MatInputModule,
-  MatProgressBarModule,
-  MatDialogModule,
-  MatTableModule,
-  MatPaginatorModule,
-  MatProgressSpinnerModule } from '@angular/material';
+ } from '@angular/material';
 import { LayoutModule } from '@angular/cdk/layout';
 import { DashboardComponent } from './dashboard/dashboard.component';
+
+// Charts
 import { NgxChartsModule } from '@swimlane/ngx-charts';
+import { NgxEchartsModule } from 'ngx-echarts';
+// import { ChartModule } from 'angular2-chartjs';
+
+import {NgxPaginationModule} from 'ngx-pagination';
+
 import { SexeChartComponent } from './dashboard/sexe-chart/sexe-chart.component';
 import { StatutChartComponent } from './dashboard/statut-chart/statut-chart.component';
 import { NationChartComponent } from './dashboard/nation-chart/nation-chart.component';
 import { EventsComponent } from './dashboard/events/events.component';
 import { DepartementComponent } from './dashboard/departement/departement.component';
 import { ExistComponent } from './fiches/exist/exist.component';
-import { BrowserModule } from '@angular/platform-browser';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DateFormatPipe } from './services/pipe/date-format.pipe';
 
 
@@ -82,11 +70,7 @@ import { DateFormatPipe } from './services/pipe/date-format.pipe';
                  EditComponent,
                  ViewComponent,
                  ListComponent,
-                 StatutComponent,
-                 PatientFilterComponent,
                  PatientsComponent,
-                 StatutFilterComponent,
-                 StatutListComponent,
                  ChatComponent,
                  DashboardComponent,
                  SexeChartComponent,
@@ -98,16 +82,18 @@ import { DateFormatPipe } from './services/pipe/date-format.pipe';
                 DateFormatPipe],
   imports: [
     CommonModule,
-    BrowserModule,
-    BrowserAnimationsModule,
     LayoutsRoutingModule,
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
     NgbModule,
-    NgxChartsModule,
+    NgxPaginationModule,
 
-    MatTabsModule,
+    NgxChartsModule,
+    NgxEchartsModule,
+    // ChartModule,
+
+
     ThemeModule,
     NbMenuModule,
 
@@ -123,7 +109,6 @@ import { DateFormatPipe } from './services/pipe/date-format.pipe';
     NbIconModule,
     NbSpinnerModule,
     NbAlertModule,
-    Ng2SmartTableModule,
     NbCalendarKitModule,
     NbCalendarModule,
     NbCalendarRangeModule,
@@ -136,28 +121,9 @@ import { DateFormatPipe } from './services/pipe/date-format.pipe';
     NbStepperModule,
     NbBadgeModule,
 
-    MatTableModule,
-    LayoutModule,
-    MatPaginatorModule,
-    MatCheckboxModule,
-    MatFormFieldModule,
-    MatToolbarModule,
-    MatButtonModule,
-    MatInputModule,
-    MatSidenavModule,
     MatIconModule,
-    MatProgressBarModule,
-    MatListModule,
-    MatFormFieldModule,
-    MatCardModule,
-    MatGridListModule,
-    MatMenuModule,
-    MatCheckboxModule,
-    MatDialogModule,
-    FormsModule,
-    ReactiveFormsModule,
-    CommonModule,
-    MatProgressSpinnerModule
+    MatButtonModule,
+    LayoutModule
   ]
 })
 export class LayoutsModule { }

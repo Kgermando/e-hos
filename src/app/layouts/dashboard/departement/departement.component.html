@@ -1,6 +1,4 @@
-<nb-card>
-    <nb-card-body> 
-        <h2 style="text-align: center;">DEPARTEMENTS</h2>
+
         <ngx-charts-pie-chart *ngIf = "chartdata"
             [view]="view"
             [scheme]="colorScheme"
@@ -11,7 +9,3 @@
             [doughnut]="doughnut"
             (select)="onSelect($event)">
         </ngx-charts-pie-chart>
-    
-    </nb-card-body>
-</nb-card>
-        

@@ -1,63 +1,107 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy, AfterViewInit } from '@angular/core';
 import { FicheService } from '../../services/data/fiche.service';
+import { NbThemeService } from '@nebular/theme';
 
 @Component({
   selector: 'app-nation-chart',
   templateUrl: './nation-chart.component.html',
   styleUrls: ['./nation-chart.component.scss']
 })
-export class NationChartComponent implements OnInit {
+export class NationChartComponent implements OnInit, AfterViewInit, OnDestroy {
 
-  // tslint:disable-next-line: no-inferrable-types
-  chartdata: boolean = false;
+  data = [];
+  nationData = [];
 
-  countryCount = [];
-  countryData = [];
+  options: any = {};
+  themeSubscription: any;
 
-  // Chart
-  view: any[] = [500, 300];
-  showLegend = true;
-
-  colorScheme = {
-    domain: ['#012456', '#43A18E', '#0097FB', '#C7B42C', '#40235D', '#A10A28',
-             '#084241', '#074105', '#BD9C24', '#B85E21', '#E91427', '#F8C89A']
-  };
-  showLabels = true;
-  explodeSlices = false;
-  doughnut = false;
-
-  constructor(private ficheService: FicheService) { }
+  constructor(private theme: NbThemeService, private ficheService: FicheService) {
+  }
 
   ngOnInit() {
     this.ficheService.getCollection$().subscribe((results) => {
-      this.chartdata = true;
       this.processData(results);
     });
   }
 
-  onSelect(event) {
-    console.log(event);
-  }
-
   processData(entries) {
-    this.countryCount = [];
-    this.countryData = [];
+    this.data = [];
+    this.nationData = [];
 
     entries.forEach(element => {
-      if (this.countryCount[element.Nation]) {
-        this.countryCount[element.Nation] += 1;
+      if (this.data[element.Nation]) {
+        this.data[element.Nation] += 1;
       } else {
-        this.countryCount[element.Nation] = 1;
+        this.data[element.Nation] = 1;
       }
     });
     // tslint:disable-next-line: forin
-    for (const key in this.countryCount) {
+    for (const key in this.data) {
         const singleentry = {
           name: key,
-          value: this.countryCount[key]
+          value: this.data[key]
         };
-        this.countryData.push(singleentry);
+        this.nationData.push(singleentry);
       }
     }
+
+  ngAfterViewInit() {
+    this.themeSubscription = this.theme.getJsTheme().subscribe(config => {
+
+      const colors = config.variables;
+      const echarts: any = config.variables.echarts;
+
+      this.options = {
+        backgroundColor: echarts.bg,
+        color: [colors.warningLight, colors.infoLight, colors.dangerLight, colors.successLight, colors.primaryLight],
+        tooltip: {
+          trigger: 'item',
+          formatter: '{a} <br/>{b} : {c} ({d}%)',
+        },
+        legend: {
+          orient: 'vertical',
+          left: 'left',
+          data: this.nationData, // Data for legende
+          textStyle: {
+            color: echarts.textColor,
+          },
+        },
+        series: [
+          {
+            name: 'Nation',
+            type: 'pie',
+            radius: '80%',
+            center: ['50%', '50%'],
+            data: this.nationData, // Data for pie
+            itemStyle: {
+              emphasis: {
+                shadowBlur: 10,
+                shadowOffsetX: 0,
+                shadowColor: echarts.itemHoverShadowColor,
+              },
+            },
+            label: {
+              normal: {
+                textStyle: {
+                  color: echarts.textColor,
+                },
+              },
+            },
+            labelLine: {
+              normal: {
+                lineStyle: {
+                  color: echarts.axisLineColor,
+                },
+              },
+            },
+          },
+        ],
+      };
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.themeSubscription.unsubscribe();
+  }
 
 }

@@ -1,31 +1,53 @@
 import { Fiche } from './../../services/models/fiche';
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { Subscription, BehaviorSubject } from 'rxjs';
+import { Component, OnInit, PipeTransform } from '@angular/core';
+import { Subscription, Observable } from 'rxjs';
 import { FicheService } from '../../services/data/fiche.service';
-import { Router, ActivatedRoute } from '@angular/router';
-import { AngularFirestore } from '@angular/fire/firestore';
-import { MatPaginator, MatTableDataSource } from '@angular/material';
+import { Router } from '@angular/router';
+import { FormControl } from '@angular/forms';
+import { DecimalPipe } from '@angular/common';
+import { map, startWith } from 'rxjs/operators';
+import { ExcelService } from '../../services/data/excel.service';
+
+const FICHES: Fiche[] = [];
+
+function search(text: string, pipe: PipeTransform): Fiche[] {
+  return FICHES.filter(fich => {
+    const term = text.toLowerCase();
+    return fich.FullName.toLowerCase().includes(term)
+        || pipe.transform(fich.Age).includes(term)
+        || pipe.transform(fich.Statut).includes(term)
+        || pipe.transform(fich.Sexe).includes(term)
+        || pipe.transform(fich.Temperature).includes(term);
+  });
+}
 
 @Component({
   selector: 'app-list',
   templateUrl: './list.component.html',
-  styleUrls: ['./list.component.scss']
+  styleUrls: ['./list.component.scss'],
+  providers: [DecimalPipe]
 })
 export class ListComponent implements OnInit {
 
-  displayedColumns: string[] = ['position', 'FullName', 'Age', 'Sexe', 'Temperature', 'Poids', 'Statut', 'Created', 'detail'];
-  dataSource;
 
-  fiches: Fiche[] = null;
+  fiche$: Observable<Fiche[]>;
 
-  getDataSubscription: Subscription;
+  filter = new FormControl('');
 
-  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+  fiches;
 
-  constructor(private afs: AngularFirestore,
-              private fichesServices: FicheService,
-              private route: ActivatedRoute,
+  // tslint:disable-next-line: no-inferrable-types
+  p: number = 1;
+
+  constructor(private fichesServices: FicheService,
+              private excelService: ExcelService,
+              pipe: DecimalPipe,
               private router: Router) {
+
+                this.fiche$ = this.filter.valueChanges.pipe(
+                  startWith(''),
+                  map(text => search(text, pipe))
+                );
 
   }
 
@@ -33,20 +55,12 @@ export class ListComponent implements OnInit {
     this.getfiches();
   }
 
-  applyFilter(filterValue: string) {
-    this.dataSource.filter = filterValue.trim().toLowerCase();
-  }
 
   getfiches() {
-    this.getDataSubscription = this.fichesServices.getCollection$().subscribe(res => {
+    this.fichesServices.getCollection$().subscribe(res => {
       this.fiches = res;
-      this.dataSource = new MatTableDataSource<Fiche>(this.fiches);
-      this.dataSource.paginator = this.paginator;
-      // tslint:disable-next-line: no-unused-expression
-      this.getDataSubscription.unsubscribe;
     });
   }
-
 
   view(id) {
     this.router.navigate(['/layouts/view', id]);
@@ -54,6 +68,10 @@ export class ListComponent implements OnInit {
 
   edit(id) {
     this.router.navigate(['/layouts/edit', id]);
+  }
+
+  exportAsXLSX(): void {
+    this.excelService.exportAsExcelFile(this.fiches, 'sample');
   }
 
   print() {

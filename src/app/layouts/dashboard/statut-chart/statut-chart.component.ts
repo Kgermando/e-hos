@@ -1,62 +1,108 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy, AfterViewInit } from '@angular/core';
 import { FicheService } from '../../services/data/fiche.service';
+import { NbThemeService } from '@nebular/theme';
 
 @Component({
   selector: 'app-statut-chart',
   templateUrl: './statut-chart.component.html',
   styleUrls: ['./statut-chart.component.scss']
 })
-export class StatutChartComponent implements OnInit {
+export class StatutChartComponent implements OnInit, AfterViewInit, OnDestroy {
 
-  // tslint:disable-next-line: no-inferrable-types
-  chartdata: boolean = false;
+  data = [];
+  statutData = [];
 
-  countryCount = [];
-  countryData = [];
+  options: any = {};
+  themeSubscription: any;
 
-  // Chart
-  view: any[] = [500, 300];
-  showLegend = true;
-
-  colorScheme = {
-    domain: ['#24BFA5', '#A10A28', '#FFA001', '#AAAAAA' ]
-  };
-  showLabels = true;
-  explodeSlices = false;
-  doughnut = false;
-
-  constructor(private ficheService: FicheService) { }
+  constructor(private theme: NbThemeService, private ficheService: FicheService) {
+  }
 
   ngOnInit() {
     this.ficheService.getCollection$().subscribe((results) => {
-      this.chartdata = true;
       this.processData(results);
     });
   }
 
-  onSelect(event) {
-    console.log(event);
-  }
-
   processData(entries) {
-    this.countryCount = [];
-    this.countryData = [];
+    this.data = [];
+    this.statutData = [];
 
     entries.forEach(element => {
-      if (this.countryCount[element.Statut]) {
-        this.countryCount[element.Statut] += 1;
+      if (this.data[element.Statut]) {
+        this.data[element.Statut] += 1;
       } else {
-        this.countryCount[element.Statut] = 1;
+        this.data[element.Statut] = 1;
       }
     });
     // tslint:disable-next-line: forin
-    for (const key in this.countryCount) {
+    for (const key in this.data) {
         const singleentry = {
           name: key,
-          value: this.countryCount[key]
+          value: this.data[key]
         };
-        this.countryData.push(singleentry);
+        this.statutData.push(singleentry);
       }
     }
+
+  ngAfterViewInit() {
+    this.themeSubscription = this.theme.getJsTheme().subscribe(config => {
+
+      const colors = config.variables;
+      const echarts: any = config.variables.echarts;
+
+      this.options = {
+        backgroundColor: echarts.bg,
+        color: [colors.warningLight, colors.infoLight, colors.dangerLight, colors.successLight, colors.primaryLight],
+        tooltip: {
+          trigger: 'item',
+          formatter: '{a} <br/>{b} : {c} ({d}%)',
+        },
+        legend: {
+          orient: 'vertical',
+          left: 'left',
+          data: this.statutData, // Data for legende
+          textStyle: {
+            color: echarts.textColor,
+          },
+        },
+        series: [
+          {
+            name: 'Statut',
+            type: 'pie',
+            radius: '80%',
+            center: ['50%', '50%'],
+            data: this.statutData, // Data for pie
+            itemStyle: {
+              emphasis: {
+                shadowBlur: 10,
+                shadowOffsetX: 0,
+                shadowColor: echarts.itemHoverShadowColor,
+              },
+            },
+            label: {
+              normal: {
+                textStyle: {
+                  color: echarts.textColor,
+                },
+              },
+            },
+            labelLine: {
+              normal: {
+                lineStyle: {
+                  color: echarts.axisLineColor,
+                },
+              },
+            },
+          },
+        ],
+      };
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.themeSubscription.unsubscribe();
+  }
+
 
 }

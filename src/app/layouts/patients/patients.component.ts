@@ -1,15 +1,31 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { switchMap } from 'rxjs/operators';
+import { Component, OnInit, PipeTransform } from '@angular/core';
 import { AuthService } from 'src/app/auth/services/auth.service';
-import { Subscription } from 'rxjs';
+import { Subscription, Observable } from 'rxjs';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Fiche } from '../services/models/fiche';
 import { FicheService } from '../services/data/fiche.service';
+import { DecimalPipe } from '@angular/common';
+import { map, startWith } from 'rxjs/operators';
+import { FormControl } from '@angular/forms';
+
+const FICHES: Fiche[] = [];
+
+function search(text: string, pipe: PipeTransform): Fiche[] {
+  return FICHES.filter(fich => {
+    const term = text.toLowerCase();
+    return fich.FullName.toLowerCase().includes(term)
+        || pipe.transform(fich.Age).includes(term)
+        || pipe.transform(fich.Statut).includes(term)
+        || pipe.transform(fich.Sexe).includes(term)
+        || pipe.transform(fich.Temperature).includes(term);
+  });
+}
 
 @Component({
   selector: 'app-patients',
   templateUrl: './patients.component.html',
-  styleUrls: ['./patients.component.scss']
+  styleUrls: ['./patients.component.scss'],
+  providers: [DecimalPipe]
 })
 export class PatientsComponent implements OnInit {
 
@@ -20,15 +36,38 @@ export class PatientsComponent implements OnInit {
   Medecin;
   subscription: Subscription;
 
+  fiche$: Observable<Fiche[]>;
+
+  filter = new FormControl('');
+
+  fiches;
+
+  // tslint:disable-next-line: no-inferrable-types
+  p: number = 1;
+
 
   constructor(private ficheService: FicheService,
               public authService: AuthService,
               private route: ActivatedRoute,
-              private router: Router) { }
+              pipe: DecimalPipe,
+              private router: Router) {
+                this.fiche$ = this.filter.valueChanges.pipe(
+                  startWith(''),
+                  map(text => search(text, pipe))
+                );
+
+               }
 
   ngOnInit() {
     this.populateFiche();
+    this.getfiches();
     // this.auth();
+  }
+
+  getfiches() {
+    this.ficheService.getCollection$().subscribe(res => {
+      this.fiches = res;
+    });
   }
 
   private populateFiche() {
