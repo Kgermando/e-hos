@@ -62,6 +62,8 @@ import { EventsComponent } from './dashboard/events/events.component';
 import { DepartementComponent } from './dashboard/departement/departement.component';
 import { ExistComponent } from './fiches/exist/exist.component';
 import { DateFormatPipe } from './services/pipe/date-format.pipe';
+import { FicheUniqueComponent } from './medecine-interne/fiche-unique/fiche-unique.component';
+import { LaboComponent } from './fiches/labo/labo.component';
 
 
 @NgModule({
@@ -79,7 +81,9 @@ import { DateFormatPipe } from './services/pipe/date-format.pipe';
                  EventsComponent,
                  DepartementComponent,
                  ExistComponent,
-                DateFormatPipe],
+                DateFormatPipe,
+                FicheUniqueComponent,
+                LaboComponent],
   imports: [
     CommonModule,
     LayoutsRoutingModule,

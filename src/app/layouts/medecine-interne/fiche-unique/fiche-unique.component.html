@@ -1,0 +1,57 @@
+<nb-card>
+        <nb-card-header>
+            <button nbButton outline status="success" shape="round" (click)="exportAsXLSX()" class="xlxs">
+                <i class="material-icons">plus</i> Nouvelle fiche
+            </button>
+            <button nbButton outline status="success" shape="round" (click)="exportAsXLSX()" class="xlxs">
+              <i class="material-icons">print</i> EXCEL FILE
+            </button>
+        </nb-card-header>
+        <nb-card-body>
+            <form>
+                <div class="form-group form-inline">
+                    <input class="form-control ml-2" type="text" placeholder="Recherche un patient" nbInput fullWidth [formControl]="filter"/>
+                </div>
+            </form>
+              
+              <table class="table table-striped">
+                <thead>
+                <tr>
+                  <th scope="col">N°</th>
+                  <th scope="col">NOM COMPLET</th>
+                  <th scope="col">AGE</th>
+                  <th scope="col">SEXE</th>
+                  <th scope="col">TEMPERATURE</th>
+                  <th scope="col">POIDS</th>
+                  <th scope="col">STATUT</th>
+                  <th scope="col">DATE</th>
+                  <th scope="col">DETAILS</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let fiche of fiches | paginate: { itemsPerPage: 10, currentPage: p }; index as i">
+                  <th scope="row">{{ i + 1 }}</th>
+                  <td>
+                    <ngb-highlight [result]="fiche.FullName" [term]="filter.value"></ngb-highlight>
+                  </td>
+                  <td><ngb-highlight [result]="fiche.Age" [term]="filter.value"></ngb-highlight> ans</td>
+                  <td><ngb-highlight [result]="fiche.Sexe" [term]="filter.value"></ngb-highlight></td>
+                  <td><ngb-highlight [result]="fiche.Temperature" [term]="filter.value"></ngb-highlight> °</td>
+                  <td><ngb-highlight [result]="fiche.Poids" [term]="filter.value"></ngb-highlight> Kgs</td>
+                  <td><ngb-highlight [result]="fiche.Statut" [term]="filter.value"></ngb-highlight></td>
+                  <td><ngb-highlight [result]="fiche.Created.toDate()| date: 'dd/MM/yyyy HH:mm:ss'"></ngb-highlight></td>
+                  <td>
+                    <button mat-icon-button color="primary" (click)="view(fiche.id)">
+                        <mat-icon class="mat-18">open_in_new</mat-icon>
+                    </button> 
+                  </td>
+                </tr>
+                </tbody>
+              </table>
+      
+              <pagination-controls (pageChange)="p = $event"></pagination-controls>
+              
+        </nb-card-body>
+      </nb-card>
+      
+      

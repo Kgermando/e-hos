@@ -25,6 +25,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
   {
     title: 'MEDECINE INTERNE',
     icon: 'activity-outline',
+    link: '/layouts/fiche-unique',
     // children: [
     //   {
     //     title: 'DIABETOLOGIE',

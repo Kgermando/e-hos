@@ -5,26 +5,31 @@ import { NbThemeService } from '@nebular/theme';
 @Component({
   selector: 'app-statut-chart',
   templateUrl: './statut-chart.component.html',
-  styleUrls: ['./statut-chart.component.scss']
+  styleUrls: ['./statut-chart.component.scss'],
 })
 export class StatutChartComponent implements OnInit, AfterViewInit, OnDestroy {
 
   data = [];
-  statutData = [];
+  statutData: any = [];
 
   options: any = {};
   themeSubscription: any;
 
   constructor(private theme: NbThemeService, private ficheService: FicheService) {
+
   }
 
   ngOnInit() {
+    this.fireData();
+  }
+
+  async fireData() {
     this.ficheService.getCollection$().subscribe((results) => {
       this.processData(results);
     });
   }
 
-  processData(entries) {
+  async processData(entries) {
     this.data = [];
     this.statutData = [];
 
@@ -43,6 +48,10 @@ export class StatutChartComponent implements OnInit, AfterViewInit, OnDestroy {
         };
         this.statutData.push(singleentry);
       }
+    }
+
+    onChartInit(ec) {
+      this.statutData = ec;
     }
 
   ngAfterViewInit() {
@@ -72,7 +81,7 @@ export class StatutChartComponent implements OnInit, AfterViewInit, OnDestroy {
             type: 'pie',
             radius: '80%',
             center: ['50%', '50%'],
-            data: this.statutData, // Data for pie
+            data: this.statutData,  // Data Firestore
             itemStyle: {
               emphasis: {
                 shadowBlur: 10,
